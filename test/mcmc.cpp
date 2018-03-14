@@ -38,10 +38,10 @@ int main( int argc, char *argv[] )
 {
   using T = double;
 
-  size_t n = 1230;
+  size_t n = 800;
   size_t w1 = 3;
-  size_t w2 = 13;
-  size_t q = 7661;
+  size_t w2 = 7;
+  size_t q = 755;
   size_t q1 = 100;
   size_t q2 = 100;
   size_t burnIn = 30000;
