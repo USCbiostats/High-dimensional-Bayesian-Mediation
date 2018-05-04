@@ -8,8 +8,8 @@
 bash
 
 
-MCMC_M=/net/wonderland/home/yanys/Bayesian_mediation/RealSimulation/BF_simulation/Bayesian-Mediation-Analysis/build/bin/mcmc_M.x
-MCMC_0=/net/wonderland/home/yanys/Bayesian_mediation/RealSimulation/BF_simulation/Bayesian-Mediation-Analysis/build/bin/mcmc.x
+MCMC_M=/net/wonderland/home/yanys/Bayesian_mediation/RealSimulation/BF_simulation/Bayesian-Mediation-Analysis/build/bin/mcmc_M_omp.x
+MCMC_0=/net/wonderland/home/yanys/Bayesian_mediation/RealSimulation/BF_simulation/Bayesian-Mediation-Analysis/build/bin/mcmc_omp.x
 
 n=1000
 w1=1

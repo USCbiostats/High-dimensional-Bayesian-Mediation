@@ -91,17 +91,26 @@ int main( int argc, char *argv[] )
     Data<T> pi_m( 1, q );
     Data<T> pi_a( 1, q );
 
-    Y.readmatrix(        n,  1, Y_filename                                        + string( ".txt" ) );
-    M.readmatrix(        n,  q, M_filename       + string( "_" ) + to_string( p ) + string( ".txt" ) );
-    A.readmatrix(        n,  1, A_filename                                        + string( ".txt" ) );
-    C1.readmatrix(       n, w1, C1_filename                                       + string( ".txt" ) );
-    C2.readmatrix(       n, w2, C2_filename                                       + string( ".txt" ) );
-    beta_m.readmatrix(   1,  q, beta_m_filename  + string( "_" ) + to_string( p ) + string( ".txt" ) );
-    alpha_a.readmatrix(  1,  q, alpha_a_filename + string( "_" ) + to_string( p ) + string( ".txt" ) );
-    pi_m.readmatrix(     1,  q, pi_m_filename    + string( "_" ) + to_string( p ) + string( ".txt" ) );
-    pi_a.readmatrix(     1,  q, pi_a_filename    + string( "_" ) + to_string( p ) + string( ".txt" ) );
+    string Y_name     = Y_filename                                        + string( ".txt" );
+    string M_name     = M_filename       + string( "_" ) + to_string( p ) + string( ".txt" );
+    string A_name     = A_filename                                        + string( ".txt" );
+    string C1_name    = C1_filename                                       + string( ".txt" );
+    string C2_name    = C2_filename                                       + string( ".txt" );
+    string beta_name  = beta_m_filename  + string( "_" ) + to_string( p ) + string( ".txt" );
+    string alpha_name = alpha_a_filename + string( "_" ) + to_string( p ) + string( ".txt" );
+    string pi_m_name  = pi_m_filename    + string( "_" ) + to_string( p ) + string( ".txt" );
+    string pi_a_name  = pi_a_filename    + string( "_" ) + to_string( p ) + string( ".txt" );
 
-    /** Execute MCMC. */
+    Y.readmatrix(        n,  1,     Y_name );
+    M.readmatrix(        n,  q,     M_name );
+    A.readmatrix(        n,  1,     A_name );
+    C1.readmatrix(       n, w1,    C1_name );
+    C2.readmatrix(       n, w2,    C2_name );
+    beta_m.readmatrix(   1,  q,  beta_name );
+    alpha_a.readmatrix(  1,  q, alpha_name );
+    pi_m.readmatrix(     1,  q,  pi_m_name );
+    pi_a.readmatrix(     1,  q,  pi_a_name );
+
     mcmc::mcmc<T>( Y, A, M, C1, C2, beta_m, alpha_a, pi_m, pi_a, 
         n, w1, w2, q, q1, q2, burnIn, niter, p );
   }
