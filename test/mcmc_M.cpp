@@ -23,7 +23,7 @@
 #include <hmlp_blas_lapack.h>
 
 #include <data.hpp>
-#include <bslmm_Y.hpp>
+#include <bslmm_M.hpp>
 
 #ifdef HMLP_MIC_AVX512
 #include <hbwmalloc.h>

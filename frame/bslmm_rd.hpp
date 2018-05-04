@@ -9,6 +9,10 @@
 #include <cstddef>
 #include <math.h>
 
+using namespace std;
+using namespace hmlp;
+
+
 namespace hmlp
 {
 namespace mcmc
@@ -181,7 +185,7 @@ class Variables
 		hmlp::Data<T> &userM,
 		hmlp::Data<T> &userC1,
 		hmlp::Data<T> &userC2,
-	    hmlp::Data<T> &userbeta_m,
+	  hmlp::Data<T> &userbeta_m,
 		hmlp::Data<T> &useralpha_a,
 		hmlp::Data<T> &userpi_m,
 		hmlp::Data<T> &userpi_a,
@@ -192,7 +196,7 @@ class Variables
 	{
       this->n = n;
       this->w1 = w1;
-	  this->w2 = w2;
+	    this->w2 = w2;
       this->q = q;
       this->q1 = q1;
       this->q2 = q2;
@@ -228,23 +232,20 @@ class Variables
       
 	  //printf( "here\n" ); fflush( stdout );
 
-      /** Set seed. */
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    generator.seed( seed );
-
-
-
-	  /** gamma distribution initialization */
+      unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+      generator.seed( seed );
+      
+      /** gamma distribution initialization */
       std::gamma_distribution<T>  dist_m0(  km0, 1.0 / lm0 );     
       std::gamma_distribution<T>  dist_m1(  km1, 1.0 / lm1 );
       std::gamma_distribution<T>  dist_a(  ka, 1.0 / la );
       std::gamma_distribution<T> dist_ma0( kma0, 1.0 / lma0 ); 
       std::gamma_distribution<T> dist_ma1( kma1, 1.0 / lma1 );
-	  std::gamma_distribution<T>  dist_g(  kg, 1.0 / lg );
+	    std::gamma_distribution<T>  dist_g(  kg, 1.0 / lg );
       std::gamma_distribution<T>  dist_e(  ke, 1.0 / le );
       sigma_m0  = 1.0 / dist_m0 ( generator ); 
       sigma_m1  = 1.0 / dist_m1 ( generator );
-	  sigma_a  = 1.0 / dist_a ( generator );
+	    sigma_a  = 1.0 / dist_a ( generator );
       sigma_ma0 = 1.0 / dist_ma0( generator );
       sigma_ma1 = 1.0 / dist_ma1( generator );
       sigma_g  = 1.0 / dist_g ( generator );
@@ -262,19 +263,19 @@ class Variables
 	  /** resize beta_a */
       beta_a.resize( 0, 0 ); 
       beta_a.resize( 1, 1 ); 
-	  //beta_a.randn( 0, std::sqrt( sigma_a ) );
-	  beta_a[ 0 ] = 0.0135567741;
+	    //beta_a.randn( 0, std::sqrt( sigma_a ) );
+	    beta_a[ 0 ] = 0.0135567741;
 
       //beta_m.resize( 0, 0 ); 
-	  //beta_m.resize( 1, q, 0.0 );
+	    //beta_m.resize( 1, q, 0.0 );
       //alpha_a.resize( 0, 0 ); 
-	  //alpha_a.resize( 1, q, 0.0 );
+	    //alpha_a.resize( 1, q, 0.0 );
 
 	  beta_c.resize( 1, w1, 0.0 );
 	  alpha_c.resize( w2, q, 0.0 );
 
       /** compute column 2-norm */
-      A2norm.resize( 1, 1, 0.0 );
+    A2norm.resize( 1, 1, 0.0 );
 	  for ( size_t i = 0; i < n; i ++ ) A2norm[ 0 ] += A[ i ] * A[ i ];
 	  M2norm.resize( 1, q, 0.0 );
 	  for ( size_t j = 0; j < q; j ++ )
@@ -348,9 +349,9 @@ class Variables
 	//Residual( n );
 	void Iteration( size_t burnIn, size_t it )
 	{ 
-	  srand (it);
-	  if ( it % 10000 == 0 ) { 
-	  printf( "Iter %4lu sigma_m0 %.3E sigma_e %.3E sigma_g %.3E sigma_ma0 %.3E sigma_m1 %.3E sigma_a %.3E sigma_ma1 %.3E", 
+
+	  if ( it % 30000 == 0 ) { 
+	  printf( "Iter %4lu sigma_m0 %.3E sigma_e %.3E sigma_g %.3E sigma_ma0 %.3E sigma_m1 %.3E sigma_a %.3E sigma_ma1 %.3E \n", 
 		it, sigma_m0, sigma_e, sigma_g, sigma_ma0, sigma_m1, sigma_a, sigma_ma1 ); fflush( stdout ); }
 	  /** update res1, res2, res2_c */
 	  if ( it == 0) Residual( it );
@@ -410,32 +411,32 @@ class Variables
         }
         T mu_mj0 = mu_mj / ( ( sigma_e / sigma_m0 ) + M2norm[ j ] ); 
         T mu_mj1 = mu_mj / ( ( sigma_e / sigma_m1 ) + M2norm[ j ] );
-		T mu_alpha_aj0 = mu_alpha_aj * ( var_alpha_a0[ 0 ] / sigma_g );
-		T mu_alpha_aj1 = mu_alpha_aj * ( var_alpha_a1[ 0 ] / sigma_g );
+		    T mu_alpha_aj0 = mu_alpha_aj * ( var_alpha_a0[ 0 ] / sigma_g );
+		    T mu_alpha_aj1 = mu_alpha_aj * ( var_alpha_a1[ 0 ] / sigma_g );
 
         //printf( "mu_mj %.4E mu_alpha_a %.4E \n", mu_mj0, mu_alpha_aj0 ); fflush( stdout );
        
-		/** beta_m[ j ] = r1[ j ] * randn( mu_mj, var_m[ j ] ) */
-		old = beta_m[ j ];
+		    /** beta_m[ j ] = r1[ j ] * randn( mu_mj, var_m[ j ] ) */
+		    old = beta_m[ j ];
         std::normal_distribution<T> dist_norm_m0( mu_mj0, std::sqrt( var_m0[ j ] ) );
         std::normal_distribution<T> dist_norm_m1( mu_mj1, std::sqrt( var_m1[ j ] ) );
-		beta_m[ j ] = r1[ j ] * dist_norm_m1( generator ) + 
-		  ( 1 - r1[ j ]) *dist_norm_m0( generator );
-     	for ( size_t i = 0; i < n; i ++ )
-		{
-		 res1[ i ] = res1[ i ] + ( old - beta_m[ j ] ) * M( i, j );
-		}
+		    beta_m[ j ] = r1[ j ] * dist_norm_m1( generator ) + 
+		                  ( 1 - r1[ j ]) *dist_norm_m0( generator );
+     	  for ( size_t i = 0; i < n; i ++ )
+		    {
+		     res1[ i ] = res1[ i ] + ( old - beta_m[ j ] ) * M( i, j );
+		    }
 
         /** alpha_a[ j ] = r3[ j ] * randn( mu_alpha_aj, var_alpha_a ) */
         old = alpha_a[ j ];
-		std::normal_distribution<T> dist_alpha_a0( mu_alpha_aj0, std::sqrt( var_alpha_a0[ 0 ] ) ); 
+		    std::normal_distribution<T> dist_alpha_a0( mu_alpha_aj0, std::sqrt( var_alpha_a0[ 0 ] ) ); 
         std::normal_distribution<T> dist_alpha_a1( mu_alpha_aj1, std::sqrt( var_alpha_a1[ 0 ] ) );
-		alpha_a[ j ] = r3[ j ] * dist_alpha_a1( generator ) +
-		 ( 1 - r3[ j ] ) * dist_alpha_a0( generator );
-		for ( size_t i = 0; i < n; i ++ )
-		{
-		 res2[ j*n + i ] = res2[ j*n + i ] + ( old - alpha_a[ j ] ) * A[ i ];
-		}
+		    alpha_a[ j ] = r3[ j ] * dist_alpha_a1( generator ) +
+		                   ( 1 - r3[ j ] ) * dist_alpha_a0( generator );
+		    for ( size_t i = 0; i < n; i ++ )
+		    {
+		     res2[ j*n + i ] = res2[ j*n + i ] + ( old - alpha_a[ j ] ) * A[ i ];
+		    }
 
         /** update r1[ j ] */
         T const2 = mu_mj1 * mu_mj1 / ( 2 * var_m1[ j ] ) - mu_mj0 * mu_mj0 / ( 2 * var_m0[ j ] ) + 
@@ -458,7 +459,7 @@ class Variables
 
         /** update r3[ j ] */
         T const5 = mu_alpha_aj1 * mu_alpha_aj1 / ( 2 * var_alpha_a1[ 0 ] ) - 
-		mu_alpha_aj0 * mu_alpha_aj0 / ( 2 * var_alpha_a0[ 0 ] ) + 
+		    mu_alpha_aj0 * mu_alpha_aj0 / ( 2 * var_alpha_a0[ 0 ] ) + 
         0.5 * std::log( var_alpha_a1[ 0 ] / sigma_ma1 ) - 0.5 * std::log( var_alpha_a0[ 0 ] / sigma_ma0 ) + std::log( pi_a[ j ] / ( 1.0 - pi_a[ j ] ) );
         if ( const5 < 300 )
         {
@@ -478,12 +479,11 @@ class Variables
 	  //printf("const2 %.4E r1 %.1E \n", const2, r1[ j ] ); fflush( stdout );
 	  //printf("const5 %.4E r3 %.1E \n", const5, r3[ j ] ); fflush( stdout );
  
-	  //beta_distribution<T> dist_pi_m( um + r1[ j ], vm + 1 - r1[ j ] );
+	    //beta_distribution<T> dist_pi_m( um + r1[ j ], vm + 1 - r1[ j ] );
       //beta_distribution<T> dist_pi_a( ua + r3[ j ], va + 1 - r3[ j ] ); 
       //pi_m[ j ]  = dist_pi_m( generator );
       //pi_a[ j ]  = dist_pi_a( generator );
 
-	  //Residual( it );
 
        for ( size_t j1 = 0; j1 < w2; j1 ++ )
         {
@@ -601,10 +601,10 @@ class Variables
 	  hmlp::Data<T> my_unif( 1, 1 );
 	  for ( size_t j = 0; j < q; j ++ )
 	  {
-		my_pi_m[ j ] = pi_m[ j ] * std::exp( log_my_pi_m[ j ] );
-		my_pi_m[ j ] = std::abs( my_pi_m[ j ] );
-		if ( my_pi_m[ j ] > 1.0 ) my_pi_m[ j ] = 1.0 / my_pi_m[ j ];
-		if ( my_pi_m[ j ] < 1.0/q ) my_pi_m[ j ] = 1.0 / ( q*q*my_pi_m[ j ] );
+		    my_pi_m[ j ] = pi_m[ j ] * std::exp( log_my_pi_m[ j ] );
+		    my_pi_m[ j ] = std::abs( my_pi_m[ j ] );
+		    if ( my_pi_m[ j ] > 1.0 ) my_pi_m[ j ] = 1.0 / my_pi_m[ j ];
+		    if ( my_pi_m[ j ] < 1.0/q ) my_pi_m[ j ] = 1.0 / ( q*q*my_pi_m[ j ] );
 	   
         my_pi_a[ j ] = pi_a[ j ]* std::exp( log_my_pi_a[ j ] );
         my_pi_a[ j ] = std::abs( my_pi_a[ j ] );
@@ -614,15 +614,15 @@ class Variables
 
         probab = PostDistribution2( my_pi_a ) -
                  PostDistribution2(    pi_a ) +
-				 PostDistribution1( my_pi_m ) -
-				 PostDistribution1(    pi_m );
+				         PostDistribution1( my_pi_m ) -
+				         PostDistribution1(    pi_m );
         my_unif.rand( 0.0, 1.0 );
         if ( probab > std::log (my_unif[ 0 ]) )
         {
       
 		  for ( size_t j = 0; j < q; j ++ )
 		  {	
-			pi_a[ j ] = my_pi_a[ j ];
+			  pi_a[ j ] = my_pi_a[ j ];
 		    pi_m[ j ] = my_pi_m[ j ];
 		  }
 		 //printf("changed pi_a %.3E pi_m %.3E \n", pi_a[ 0 ], pi_m[ 0 ]); fflush( stdout );
@@ -636,21 +636,21 @@ class Variables
 	  //printf("beta_a %.3E", beta_a[ 0 ] );
       //printf("beta_c %.3E", beta_c[ 0 ] );
       //printf("beta_m %.3E", beta_m[ 0 ] );
-	  if ( it % 1000 == 0 ) 
-       { printf( "Iter %4lu \n", it ); fflush( stdout ); }
+	  //if ( it % 1000 == 0 ) 
+      // { printf( "Iter %4lu \n", it ); fflush( stdout ); }
 	  if ( it > burnIn && it % 10 == 0 )
 	  {
         //printf( "Iter %4lu \n", it ); fflush( stdout );
         std::ofstream outfile;
-        std::string outfilename = std::string( "results_" ) + std::to_string( (int)q ) + std::string( ".txt" );
+        std::string outfilename = std::string( "results_" ) + std::to_string( (int)q1 ) + std::to_string( (int)q2 ) + std::string( ".txt" );
         outfile.open( outfilename.data(), std::ios_base::app );
 
 		//std::ofstream outfile;
 		//outfile.open("results_shore.txt", std::ios_base::app);
 		for ( size_t i = 0; i < q; i ++ ) 
-		  outfile << beta_m[ i ] << " " << pi_m[ i ] << " " << alpha_a[ i ] << " " << pi_a[ i ] << " ";
+		  outfile << beta_m[ i ] << " " << pi_m[ i ] << " " << (int)r1[ i ] << " " << alpha_a[ i ] << " " << pi_a[ i ] << " " << (int)r3[ i ] << " ";
 		
-	    outfile << beta_a[ 0 ] << "\n";
+	    outfile << beta_a[ 0 ] << " " << sigma_m0 << " " << sigma_m1 << " " << sigma_ma0 << " " << sigma_ma1 << "\n";
 	  }
 
  
@@ -674,11 +674,11 @@ class Variables
 
     T km0  = 2.0;
 
-    T lm0  = 0.1;
+    T lm0  = 1E-04;
 
 	T km1 = 2.0;
 
-	T lm1 = 0.5;
+	T lm1 = 1.0;
 
     T ka  = 2.0;
 
@@ -686,7 +686,7 @@ class Variables
   
     T kma0 = 2.0;
 
-    T lma0 = 1.0;
+    T lma0 = 1E-04;
 
 	T kma1 = 2.0;
 
@@ -784,6 +784,8 @@ void mcmc( hmlp::Data<T> &Y,
 	       size_t n, size_t w1, size_t w2, size_t q, size_t q1, size_t q2, size_t burnIn, size_t niter )
 {
   Variables<T> variables( Y, A, M, C1, C2, beta_m, alpha_a, pi_m, pi_a, n, w1, w2, q, q1, q2 );
+
+  std::srand(std::time(nullptr));
 
   for ( size_t it = 0; it < niter; it ++ )
   {

@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <vector>
 #include <deque>
+#include <chrono>
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -168,7 +169,7 @@ class Data : public std::vector<T, Allocator>
     };
 
 
-    void WriteFile( char *name )
+    void WriteFile( const char *name )
     {
       FILE * pFile;
       pFile = fopen ( name, "w" );

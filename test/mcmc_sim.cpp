@@ -23,7 +23,7 @@
 #include <hmlp_blas_lapack.h>
 
 #include <data.hpp>
-#include <bslmm_Y.hpp>
+#include <bslmm_sim.hpp>
 
 #ifdef HMLP_MIC_AVX512
 #include <hbwmalloc.h>
@@ -47,6 +47,7 @@ int main( int argc, char *argv[] )
   size_t burnIn = 30000;
   size_t niter = 50000;
   size_t permute = 1;
+  size_t setting = 1;
 
 	if ( argc == 19 )
 	{
