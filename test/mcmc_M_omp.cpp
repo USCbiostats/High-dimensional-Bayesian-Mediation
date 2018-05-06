@@ -79,7 +79,7 @@ int main( int argc, char *argv[] )
   string pi_a_filename(    argv[ 18 ] );
 
   #pragma omp parallel for 
-  for ( int p = 0; p < permute; p ++ )
+  for ( int p = 1; p < permute; p ++ )
   {
     Data<T> Y( n, 1 );
     Data<T> M( n, q ); 

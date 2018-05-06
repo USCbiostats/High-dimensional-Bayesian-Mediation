@@ -2,11 +2,12 @@
 #SBATCH --time=72:00:00
 #SBATCH --job-name=PMY
 #SBATCH --mem=10000
-#SBATCH --array=1-1000%250
+#SBATCH --array=1-1
 #SBATCH --workdir=/net/wonderland/home/yanys/Bayesian_mediation/RealSimulation/BF_simulation/permutation 
 
 bash
 
+export OMP_NUM_THREADS=24
 
 MCMC_M=/net/wonderland/home/yanys/Bayesian_mediation/RealSimulation/BF_simulation/Bayesian-Mediation-Analysis/build/bin/mcmc_M_omp.x
 MCMC_0=/net/wonderland/home/yanys/Bayesian_mediation/RealSimulation/BF_simulation/Bayesian-Mediation-Analysis/build/bin/mcmc_omp.x
@@ -15,15 +16,14 @@ n=1000
 w1=1
 w2=1
 q=100
-bunrin=50000
+burnin=50000
 niter=100000
-
 
 
 let k=0
 
 for((m=1;m<=1;m++)); do
-  for((rep=1;rep<=1000;rep++)); do
+  for((rep=1;rep<=1;rep++)); do
     for((i=1;i<=1;i++)); do
     
       let k=${k}+1
