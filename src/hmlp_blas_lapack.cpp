@@ -22,6 +22,34 @@ extern "C"
       float *A, int *lda, 
       float *B, int *ldb, float *beta, 
       float *C, int *ldc );
+  void dtrsm_( 
+      const char *side, const char *uplo,
+      const char *transA, const char *diag,
+      int *m, int *n,
+      double *alpha,
+      double *A, int *lda,
+      double *B, int *ldb );
+  void strsm_( 
+      const char *side, const char *uplo,
+      const char *transA, const char *diag,
+      int *m, int *n,
+      float *alpha,
+      float *A, int *lda,
+      float *B, int *ldb );
+  void dtrmm_( 
+      const char *side, const char *uplo,
+      const char *transA, const char *diag,
+      int *m, int *n,
+      double *alpha,
+      double *A, int *lda,
+      double *B, int *ldb );
+  void strmm_( 
+      const char *side, const char *uplo,
+      const char *transA, const char *diag,
+      int *m, int *n,
+      float *alpha,
+      float *A, int *lda,
+      float *B, int *ldb );
   void dpotrf_(
       const char *uplo,
       int *n,
@@ -237,6 +265,148 @@ void xgemm
   }
 #endif
 };
+
+
+/**
+ *  @brief DTRSM wrapper
+ */ 
+void xtrsm
+( 
+  const char *side, const char *uplo,
+  const char *transA, const char *diag,
+  int m, int n,
+  double alpha,
+  double *A, int lda,
+  double *B, int ldb 
+)
+{
+  double beg, xtrsm_time = 0.0;
+  double gflops = (double)( m ) * ( m - 1 ) * n / 1E+9;
+  beg = omp_get_wtime();
+
+#ifdef USE_BLAS
+  dtrsm_
+  (
+    side, uplo,
+	  transA, diag,
+	  &m, &n,
+	  &alpha,
+	  A, &lda,
+	  B, &ldb
+  );
+#else
+  printf( "xtrsm must enables USE_BLAS.\n" );
+  exit( 1 );
+#endif
+  
+  xtrsm_time = omp_get_wtime() - beg;
+#ifdef DEBUG_XTRSM
+  printf( "dtrsm m %d n %d, %5.2lf GFLOPS, %5.2lf s\n", 
+      m, n, gflops / xtrsm_time, xtrsm_time );
+#endif
+}; /** end xtrsm() */
+
+
+/**
+ *  @brief STRSM wrapper
+ */ 
+void xtrsm
+( 
+  const char *side, const char *uplo,
+  const char *transA, const char *diag,
+  int m, int n,
+  float alpha,
+  float *A, int lda,
+  float *B, int ldb 
+)
+{
+#ifdef USE_BLAS
+  strsm_
+  (
+    side, uplo,
+	  transA, diag,
+	  &m, &n,
+	  &alpha,
+	  A, &lda,
+	  B, &ldb
+  );
+#else
+  printf( "xtrsm must enables USE_BLAS.\n" );
+  exit( 1 );
+#endif
+}; /** end xtrsm() */
+
+
+/**
+ *  @brief DTRMM wrapper
+ */ 
+void xtrmm
+( 
+  const char *side, const char *uplo,
+  const char *transA, const char *diag,
+  int m, int n,
+  double alpha,
+  double *A, int lda,
+  double *B, int ldb 
+)
+{
+#ifdef USE_BLAS
+  dtrmm_
+  (
+    side, uplo,
+	  transA, diag,
+	  &m, &n,
+	  &alpha,
+	  A, &lda,
+	  B, &ldb
+  );
+#else
+  printf( "xtrmm must enables USE_BLAS.\n" );
+  exit( 1 );
+#endif
+}; /** end xtrmm() */
+
+
+/**
+ *  @brief STRMM wrapper
+ */ 
+void xtrmm
+( 
+  const char *side, const char *uplo,
+  const char *transA, const char *diag,
+  int m, int n,
+  float alpha,
+  float *A, int lda,
+  float *B, int ldb 
+)
+{
+#ifdef USE_BLAS
+  strmm_
+  (
+    side, uplo,
+	  transA, diag,
+	  &m, &n,
+	  &alpha,
+	  A, &lda,
+	  B, &ldb
+  );
+#else
+  printf( "xtrmm must enables USE_BLAS.\n" );
+  exit( 1 );
+#endif
+}; /** end xtrmm() */
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /**

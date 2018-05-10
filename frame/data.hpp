@@ -17,17 +17,20 @@
 #define DEBUG_DATA 1
 
 
+using namespace std;
+
+
 namespace hmlp
 {
 
-template<class T, class Allocator = std::allocator<T> >
-class Data : public std::vector<T, Allocator>
+template<class T, class Allocator = allocator<T> >
+class Data : public vector<T, Allocator>
 {
   public:
 
     Data() : d( 0 ), n( 0 ) {};
 
-    Data( std::size_t d, std::size_t n ) : std::vector<T, Allocator>( d * n )
+    Data( size_t d, size_t n ) : vector<T, Allocator>( d * n )
     { 
       this->d = d;
       this->n = n;
@@ -347,15 +350,13 @@ class Data : public std::vector<T, Allocator>
     };
 
 
-    std::size_t dim()
-    {
-      return d;
-    };
+    size_t dim() { return d; };
+    size_t num() { return n; };
 
-    std::size_t num()
-    {
-      return n;
-    };
+    size_t row() { return d; };
+    size_t col() { return n; };
+
+
 
     void Print()
     {
@@ -365,13 +366,34 @@ class Data : public std::vector<T, Allocator>
 
   private:
 
-    std::size_t d;
+    size_t d = 0;
 
-    std::size_t n;
+    size_t n = 0;
 
 };
 
 
-}; // end namespace hmlp
+template<typename T>
+Data<T> operator * ( const Data<T> &A, const Data<T> &B ) const
+{
+  assert( A.col() == B.row() )
+
+  size_t m = A.row();
+  size_t k = A.col();
+  size_t n = B.col();
+
+  Data<T> C( m, n );
+
+  xgemm( "No Transpose", "No Transpose", m, n, k, 
+      1.0, A.data(), m,
+           B.data(), k, 
+      0.0, C.data(), m );
+
+  return C;
+};
+
+
+
+}; /** end namespace hmlp */
 
 #endif //define DATA_HPP

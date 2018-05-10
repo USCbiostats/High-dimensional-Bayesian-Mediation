@@ -31,6 +31,42 @@ void xgemm
 );
 
 
+void xtrsm
+( 
+  const char *side, const char *uplo,
+  const char *transA, const char *diag,
+  int m, int n,
+  float alpha, float *A, int lda,
+               float *B, int ldb 
+);
+
+void xtrsm
+( 
+  const char *side, const char *uplo,
+  const char *transA, const char *diag,
+  int m, int n,
+  double alpha, double *A, int lda,
+                double *B, int ldb 
+);
+
+void xtrmm
+(
+  const char *side, const char *uplo,
+  const char *transA, const char *diag,
+  int m, int n,
+  float alpha, float *A, int lda,
+               float *B, int ldb 
+);
+
+void xtrmm
+(
+  const char *side, const char *uplo,
+  const char *transA, const char *diag,
+  int m, int n,
+  double alpha, double *A, int lda,
+                double *B, int ldb 
+);
+
 void xpotrf
 (
   const char *uplo,
