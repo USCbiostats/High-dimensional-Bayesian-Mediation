@@ -385,9 +385,9 @@ class Data : public vector<T, Allocator>
 
 
 template<typename T>
-Data<T> operator * ( const Data<T> &A, const Data<T> &B )
+static Data<T> operator * ( const Data<T> &A, const Data<T> &B ) 
 {
-  assert( A.col() == B.row() )
+  assert( A.col() == B.row() );
 
   size_t m = A.row();
   size_t k = A.col();
