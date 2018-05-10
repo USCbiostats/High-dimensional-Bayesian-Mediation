@@ -7,24 +7,24 @@ namespace hmlp
 {
 
 template<typename T>
-class MultiVariateNormal
+class MultiVariableNormal
 {
   public:
 
-    MultiVariateNormal( Data<T> mu, Data<T> &Sigma )
+    MultiVariableNormal( Data<T> mu, Data<T> &Sigma )
     {
       this->d = mu.row();
       this->mu = mu;
       this->Sigma = Sigma;
       /** Cholesky factorization (POTRF): Sigma = LL' */
-      xportrf( "Lower", d, Sigma.data(), d );
+      xpotrf( "Lower", d, Sigma.data(), d );
       /** Compute the determinant from the Cholesky factorization */
       for ( uint64_t i = 0; i < d; i ++ ) det *= Sigma( i, i ) * Sigma( i, i );
     };
 
-    T Determinant() { return ret; };
+    T Determinant() { return det; };
 
-    T LogDeterminant() { return std::log( ret ) }
+    T LogDeterminant() { return std::log( det ); }
 
     Data<T> SampleFrom( uint64_t num_of_samples )
     {
@@ -33,7 +33,13 @@ class MultiVariateNormal
       X.randn();
       /** Compute L * X using TRMM. */
       xtrmm( "Left", "Lower", "No Transpose", "Not Unit", d, num_of_samples,
-          1.0, Sigma.data(), d, X.data(), d )
+          1.0, Sigma.data(), d, X.data(), d );
+      /** X = mu + X; */
+      for ( uint64_t j = 0; j < num_of_samples; j ++)
+      {
+        for ( uint64_t i = 0; i < d; i ++ ) X( i, j ) += mu[ i ];
+      }
+
       return X;
     };
 

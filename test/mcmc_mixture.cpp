@@ -34,9 +34,15 @@ int main( int argc, char *argv[] )
   size_t d = 3;
 
   Data<T> mu( d, 1, 0 );
-  Data<T> Sigma( d, d ); Sigma.randspd(); 
+  Data<T> Sigma( d, d ); Sigma.randspd<false>(); 
 
-  MultiVariableNornal<T> my_mvn( mu, Sigma );
+  MultiVariableNormal<T> my_mvn( mu, Sigma );
+
+  Sigma.Print();
+  auto det = my_mvn.Determinant();
+  auto logdet = my_mvn.LogDeterminant();
+  auto sample = my_mvn.SampleFrom( 10 );
+  sample.Print();
 
   return 0;
 };

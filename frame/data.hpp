@@ -356,12 +356,23 @@ class Data : public vector<T, Allocator>
     size_t row() { return d; };
     size_t col() { return n; };
 
-
-
     void Print()
     {
       printf( "Data in %lu * %lu\n", d, n );
-      //hmlp::hmlp_printmatrix( d, n, this->data(), d );
+      for ( int j = 0; j < n; j ++ )
+      {
+        if ( j % 5 == 0 || j == 0 || j == n - 1 ) printf( "col[%4d] ", j );
+        else printf( "          " );
+      }
+      printf( "\n===========================================================\n" );
+
+      printf( "A = [\n" );
+      for ( int i = 0; i < d; i ++ )
+      {
+        for ( int j = 0; j < n; j ++ ) printf( "% .2E ", (double) (*this)[ j * d + i ] );
+        printf(";\n");
+      }
+      printf("];\n");
     };
 
   private:
@@ -374,7 +385,7 @@ class Data : public vector<T, Allocator>
 
 
 template<typename T>
-Data<T> operator * ( const Data<T> &A, const Data<T> &B ) const
+Data<T> operator * ( const Data<T> &A, const Data<T> &B )
 {
   assert( A.col() == B.row() )
 

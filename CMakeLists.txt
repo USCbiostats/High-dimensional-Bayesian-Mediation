@@ -21,10 +21,10 @@ find_program (ICC_PATH "icc")
 find_program (ICPC_PATH "icpc")
 set (CMAKE_C_COMPILER ${ICC_PATH})
 set (CMAKE_CXX_COMPILER ${ICPC_PATH})
-set (PROJECT_CFLAGS "-std=c++11 -O3 -qopenmp")
+set (PROJECT_CFLAGS "-std=c++11 -O3 -qopenmp -DUSE_BLAS")
 set (MKLROOT "/net/wonderland/home/yanys/intel/mkl")
-#set (PROJECT_EXE_LINKER_FLAGS "-mkl=parallel")
-set (PROJECT_EXE_LINKER_FLAGS "-Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_intel_thread.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -liomp5 -lpthread -lm -ldl")
+set (PROJECT_EXE_LINKER_FLAGS "-mkl=parallel")
+#set (PROJECT_EXE_LINKER_FLAGS "-Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_intel_thread.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -liomp5 -lpthread -lm -ldl")
 
 # Setup all flags
 # ---------------------------
