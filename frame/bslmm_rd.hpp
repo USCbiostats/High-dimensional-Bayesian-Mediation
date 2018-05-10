@@ -350,7 +350,7 @@ class Variables
 	void Iteration( size_t burnIn, size_t it )
 	{ 
 
-	  if ( it % 30000 == 0 ) { 
+	  if ( it % 70000 == 0 ) { 
 	  printf( "Iter %4lu sigma_m0 %.3E sigma_e %.3E sigma_g %.3E sigma_ma0 %.3E sigma_m1 %.3E sigma_a %.3E sigma_ma1 %.3E \n", 
 		it, sigma_m0, sigma_e, sigma_g, sigma_ma0, sigma_m1, sigma_a, sigma_ma1 ); fflush( stdout ); }
 	  /** update res1, res2, res2_c */

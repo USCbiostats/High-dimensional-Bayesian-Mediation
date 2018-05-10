@@ -485,10 +485,10 @@ class Variables
          r3[ j ] = 1.0;
        }
 
-       //beta_distribution<T> dist_pi_m( um + r1[ j ], vm + 1 - r1[ j ] );
-       //beta_distribution<T> dist_pi_a( ua + r3[ j ], va + 1 - r3[ j ] ); 
-       //pi_m[ j ]  = dist_pi_m( generator );
-       //pi_a[ j ]  = dist_pi_a( generator );
+       beta_distribution<T> dist_pi_m( um + r1[ j ], vm + 1 - r1[ j ] );
+       beta_distribution<T> dist_pi_a( ua + r3[ j ], va + 1 - r3[ j ] ); 
+       pi_m[ j ]  = dist_pi_m( generator );
+       pi_a[ j ]  = dist_pi_a( generator );
 
        //printf( "Iter %4lu q %4lu r1 %.3E pi_m %.3E \n", it, j, r1[ j ], pi_m[ j ] ); fflush( stdout ); 
        //for ( size_t j1 = 0; j1 < w2; j1 ++ )
@@ -596,51 +596,51 @@ class Variables
       sigma_ma0 = 1.0 / dist_ma0 ( generator );
       
       //printf( "Iter %4lu sigma_a %.3E sigma_m0 %.3E \n", it, sigma_a, sigma_m0 ); fflush( stdout ); 
-     hmlp::Data<T> log_my_pi_m( 1, q ); log_my_pi_m.rand( -0.01, 0.01 );
-	   hmlp::Data<T> log_my_pi_a( 1, q ); log_my_pi_a.rand( -0.01, 0.01 );
-     hmlp::Data<T> my_pi_m( 1, q );
-     hmlp::Data<T> my_pi_a( 1, q );
+     //hmlp::Data<T> log_my_pi_m( 1, q ); log_my_pi_m.rand( -0.01, 0.01 );
+	   //hmlp::Data<T> log_my_pi_a( 1, q ); log_my_pi_a.rand( -0.01, 0.01 );
+     //hmlp::Data<T> my_pi_m( 1, q );
+     //hmlp::Data<T> my_pi_a( 1, q );
 
-     T probab = 0.0;
-	   hmlp::Data<T> my_unif( 1, 1 );
-	   for ( size_t j = 0; j < q; j ++ )
-	    {
-		    my_pi_m[ j ] = pi_m[ j ] * std::exp( log_my_pi_m[ j ] );
-		    my_pi_m[ j ] = std::abs( my_pi_m[ j ] );
-		    if ( my_pi_m[ j ] > 1.0 ) my_pi_m[ j ] = 1.0 / my_pi_m[ j ];
-		    if ( my_pi_m[ j ] < 1.0/q ) my_pi_m[ j ] = 1.0 / ( q*q*my_pi_m[ j ] );
+     //T probab = 0.0;
+	   //hmlp::Data<T> my_unif( 1, 1 );
+	   //for ( size_t j = 0; j < q; j ++ )
+	   //{
+		 //   my_pi_m[ j ] = pi_m[ j ] * std::exp( log_my_pi_m[ j ] );
+		 //   my_pi_m[ j ] = std::abs( my_pi_m[ j ] );
+		 //   if ( my_pi_m[ j ] > 1.0 ) my_pi_m[ j ] = 1.0 / my_pi_m[ j ];
+		 //   if ( my_pi_m[ j ] < 1.0/q ) my_pi_m[ j ] = 1.0 / ( q*q*my_pi_m[ j ] );
 	   
-        my_pi_a[ j ] = pi_a[ j ]* std::exp( log_my_pi_a[ j ] );
-        my_pi_a[ j ] = std::abs( my_pi_a[ j ] );
-        if ( my_pi_a[ j ] > 1.0 ) my_pi_a[ j ] = 1.0 / my_pi_a[ j ];
-        if ( my_pi_a[ j ] < 1.0/q ) my_pi_a[ j ] = 1.0 / ( q*q*my_pi_a[ j ] );
-      }
+     //   my_pi_a[ j ] = pi_a[ j ]* std::exp( log_my_pi_a[ j ] );
+     //   my_pi_a[ j ] = std::abs( my_pi_a[ j ] );
+     //   if ( my_pi_a[ j ] > 1.0 ) my_pi_a[ j ] = 1.0 / my_pi_a[ j ];
+     //   if ( my_pi_a[ j ] < 1.0/q ) my_pi_a[ j ] = 1.0 / ( q*q*my_pi_a[ j ] );
+     // }
 
-      probab = PostDistribution1( my_pi_m ) -
-               PostDistribution1(    pi_m );
-      my_unif.rand( 0.0, 1.0 );
-      if ( probab > std::log (my_unif[ 0 ]) )
-      {
+     // probab = PostDistribution1( my_pi_m ) -
+     //          PostDistribution1(    pi_m );
+     // my_unif.rand( 0.0, 1.0 );
+     // if ( probab > std::log (my_unif[ 0 ]) )
+     // {
 
-        for ( size_t j = 0; j < q; j ++ )
-        {	
-          pi_m[ j ] = my_pi_m[ j ];
-        }
+     //   for ( size_t j = 0; j < q; j ++ )
+     //   {	
+     //     pi_m[ j ] = my_pi_m[ j ];
+     //   }
 
-     }
+     //}
 
-      probab = PostDistribution2( my_pi_a ) -
-               PostDistribution2(    pi_a );
-      my_unif.rand( 0.0, 1.0 );
-      if ( probab > std::log (my_unif[ 0 ]) )
-      {
+     // probab = PostDistribution2( my_pi_a ) -
+     //          PostDistribution2(    pi_a );
+     // my_unif.rand( 0.0, 1.0 );
+     // if ( probab > std::log (my_unif[ 0 ]) )
+     // {
 
-        for ( size_t j = 0; j < q; j ++ )
-        {
-          pi_a[ j ] = my_pi_a[ j ];
-        }
+     //   for ( size_t j = 0; j < q; j ++ )
+     //   {
+     //     pi_a[ j ] = my_pi_a[ j ];
+     //   }
 
-      }
+     // }
 
 
       if ( it > burnIn && it % 50 == 0 )
