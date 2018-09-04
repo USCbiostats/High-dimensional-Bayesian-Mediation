@@ -1,17 +1,3 @@
-/**
- * mcmc.c
- *
- * Chenhan D. Yu
- *
- * Department of Computer Science, University of Texas at Austin
- *
- * Purpose: 
- *
- * Todo:
- *
- * Modification:
- *
- **/
 
 #include <tuple>
 #include <algorithm>
@@ -94,8 +80,8 @@ int main( int argc, char *argv[] )
 
     hmlp::Data<T> beta_m( 1, q );
     hmlp::Data<T> alpha_a( 1, q ); 
-    hmlp::Data<T> pi_m( 1, q );
-    hmlp::Data<T> pi_a( 1, q );
+    hmlp::Data<T> pi_m( 1, 1 );
+    hmlp::Data<T> pi_a( 1, 1 );
 
     Y.readmatrix( n, 1, Y_filename );
     M.readmatrix( n, q, M_filename );
@@ -105,8 +91,8 @@ int main( int argc, char *argv[] )
 
 	  beta_m.readmatrix( 1, q, beta_m_filename );
     alpha_a.readmatrix( 1, q, alpha_a_filename );
-    pi_m.readmatrix( 1, q, pi_m_filename );
-    pi_a.readmatrix( 1, q, pi_a_filename );
+    pi_m.readmatrix( 1, 1, pi_m_filename );
+    pi_a.readmatrix( 1, 1, pi_a_filename );
 
 	//hmlp::Data<T> X( 2, 3 ); X.randn();
 	//X.WriteFile( "X.m" );

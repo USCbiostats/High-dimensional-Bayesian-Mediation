@@ -206,7 +206,7 @@ class Variables
     this->permute = permute;
 
     /** Initialize my_samples here. */
-    my_samples.resize( 5000, 3 * q + 3, 0.0 );
+    my_samples.resize( 1000, 2 * q + 3, 0.0 );
 
 
     /** generate synthetic data Y, A, M and E */
@@ -400,6 +400,7 @@ class Variables
 
      //printf( "Iter %4lu sigma_e %.3E var_a %.3E \n", it, sigma_e, var_a[ 0 ] ); fflush( stdout ); 
 
+     size_t r_count = 0;
      for ( size_t j = 0; j < q; j ++ )
      {
        /** update res1, res2 */
@@ -449,7 +450,7 @@ class Variables
        /** update r1[ j ] */
        T const2 = mu_mj1 * mu_mj1 / ( 2 * var_m1[ j ] ) - mu_mj0 * mu_mj0 / ( 2 * var_m0[ j ] ) + 
          0.5 * std::log( var_m1[ j ] / sigma_m1 ) - 0.5 * std::log( var_m0[ j ] / sigma_m0 ) + 
-         std::log( pi_m[ j ] / ( 1.0 - pi_m[ j ] ) );
+         std::log( pi_m[ 0 ] / ( 1.0 - pi_m[ 0 ] ) );
        if ( const2 < 300 )
        {
          const2 = std::exp( const2 );
@@ -486,10 +487,11 @@ class Variables
        //  r3[ j ] = 1.0;
        //}
 
-       beta_distribution<T> dist_pi_m( um + r1[ j ], vm + 1 - r1[ j ] );
+       //beta_distribution<T> dist_pi_m( um + r1[ j ], vm + 1 - r1[ j ] );
        //beta_distribution<T> dist_pi_a( ua + r3[ j ], va + 1 - r3[ j ] ); 
-       pi_m[ j ]  = dist_pi_m( generator );
+       //pi_m = dist_pi_m( generator );
        //pi_a[ j ]  = dist_pi_a( generator );
+       r_count += r1[ j ];
 
        //printf( "Iter %4lu q %4lu r1 %.3E pi_m %.3E \n", it, j, r1[ j ], pi_m[ j ] ); fflush( stdout ); 
        //for ( size_t j1 = 0; j1 < w2; j1 ++ )
@@ -530,7 +532,8 @@ class Variables
      //}
 
      //}
-
+     beta_distribution<T> dist_pi_m( um + r_count, vm + q - r_count );
+     pi_m[ 0 ] = dist_pi_m( generator );
 
      /** update beta_a */
      T mu_a = 0.0;
@@ -630,7 +633,7 @@ class Variables
 
       //}
 
-      if ( it > burnIn && it % 10 == 0 )
+      if ( it > burnIn && it % 50 == 0 )
       {
         //std::ofstream outfile;
         //std::string outfilename = std::string( "results_pY_" ) + std::to_string( (int)q1 ) + std::to_string( (int)q2 ) + std::string( "_" ) + std::to_string( (int)permute ) + std::string( ".txt" );
@@ -640,23 +643,22 @@ class Variables
         //outfile.open("results_shore.txt", std::ios_base::app);
         for ( size_t i = 0; i < q; i +=1 ) 
         {
-          my_samples( count, 3*i   ) = beta_m[ i ];
-          my_samples( count, 3*i+1 ) = pi_m[ i ];
-          my_samples( count, 3*i+2 ) = (int)r1[ i ];
+          my_samples( count, 2*i   ) = beta_m[ i ];
+          //my_samples( count, 3*i+1 ) = pi_m[ 0 ];
+          my_samples( count, 2*i+1 ) = (int)r1[ i ];
         }		  
 
-        my_samples( count, 3*q ) = beta_a[ 0 ]; 
-        my_samples( count, 3*q + 1 ) = sigma_m0;
-        my_samples( count, 3*q + 2 ) = sigma_m1;
+        my_samples( count, 2*q ) = beta_a[ 0 ]; 
+        my_samples( count, 2*q + 1 ) = sigma_m0;
+        my_samples( count, 2*q + 2 ) = sigma_m1;
         count += 1;
 
-      }
-
-      if ( count >= 4999 ) 
+      if ( count >= 999 ) 
       {
         string my_samples_filename = string( "results_pY_" ) + to_string( (int)q1 ) + to_string( (int)q2 ) + string( "_" ) + to_string( (int)permute ) + string( ".txt" );
         my_samples.WriteFile( my_samples_filename.data() );
       }
+  }
 
    };
 
@@ -688,7 +690,7 @@ class Variables
 
     T ka  = 2.0;
 
-    T la  = 1.0;
+    T la  = 0.1;
   
     T kma0 = 2.0;
 
@@ -710,9 +712,9 @@ class Variables
 
     T ua  = 1.0;
 
-    T vm  = 2.0;
+    T vm  = 20.0;
 
-    T va  = 2.0;
+    T va  = 20.0;
 
     T sigma_m0, sigma_m1;
 

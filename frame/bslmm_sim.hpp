@@ -643,7 +643,7 @@ class Variables
      // }
 
 
-      if ( it > burnIn && it % 50 == 0 )
+      if ( it > burnIn && it % 10 == 0 )
       {
         //std::ofstream outfile;
         //std::string outfilename = std::string( "results_pY_" ) + std::to_string( (int)q1 ) + std::to_string( (int)q2 ) + std::string( "_" ) + std::to_string( (int)permute ) + std::string( ".txt" );
@@ -669,14 +669,15 @@ class Variables
         my_samples( count, 6*q + 3 ) = sigma_ma0;
         my_samples( count, 6*q + 4 ) = sigma_ma1;
         count += 1;
+	printf( "Iter %4lu \n", count ); fflush( stdout ); 
 
-      }
-
-      if ( count >= 999 ) 
+      if ( count >= 499 ) 
       {
+	printf( "Iter %4lu \n", count ); fflush( stdout ); 
         string my_samples_filename = string( "results_" ) + to_string( (int)q1 ) + to_string( (int)q2 ) + string( ".txt" );
         my_samples.WriteFile( my_samples_filename.data() );
       }
+   }
 
    };
 
@@ -700,7 +701,7 @@ class Variables
 
     T km0  = 2.0;
 
-    T lm0  = 1E-6;
+    T lm0  = 1E-10;
 
   	T km1 = 2.0;
 

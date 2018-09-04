@@ -1,18 +1,3 @@
-/**
- * mcmc.c
- *
- * Chenhan D. Yu
- *
- * Department of Computer Science, University of Texas at Austin
- *
- * Purpose: 
- *
- * Todo:
- *
- * Modification:
- *
- **/
-
 #include <tuple>
 #include <algorithm>
 #include <random>
@@ -88,8 +73,8 @@ int main( int argc, char *argv[] )
     Data<T> C2( n, w2 );
     Data<T> beta_m( 1, q );
     Data<T> alpha_a( 1, q ); 
-    Data<T> pi_m( 1, q );
-    Data<T> pi_a( 1, q );
+    Data<T> pi_m( 1, 1 );
+    Data<T> pi_a( 1, 1 );
   
     string Y_name     = Y_filename       + string( "_" ) + to_string( p ) + string( ".txt" );
     string M_name     = M_filename                                        + string( ".txt" );
@@ -108,8 +93,8 @@ int main( int argc, char *argv[] )
     C2.readmatrix(       n, w2,    C2_name );
     beta_m.readmatrix(   1,  q,  beta_name );
     alpha_a.readmatrix(  1,  q, alpha_name );
-    pi_m.readmatrix(     1,  q,  pi_m_name );
-    pi_a.readmatrix(     1,  q,  pi_a_name );
+    pi_m.readmatrix(     1,  1,  pi_m_name );
+    pi_a.readmatrix(     1,  1,  pi_a_name );
 
     /** Execute MCMC. */
     mcmc::mcmc<T>( Y, A, M, C1, C2, beta_m, alpha_a, pi_m, pi_a, 

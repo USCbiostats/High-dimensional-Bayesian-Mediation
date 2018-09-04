@@ -1,0 +1,65 @@
+No LSB modules are available.
+Distributor ID:	Ubuntu
+Description:	Ubuntu 14.04.5 LTS
+Release:	14.04
+Codename:	trusty
+PROJECT_DIR = /net/wonderland/home/yanys/Bayesian_mediation/RealSimulation/BF_simulation/Bayesian-Mediation-Analysis
+PROJECT_NAME = HELLOWORLD
+-- The C compiler identification is GNU 4.8.5
+-- The CXX compiler identification is GNU 4.8.5
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /net/wonderland/home/yanys/Bayesian_mediation/RealSimulation/BF_simulation/Bayesian-Mediation-Analysis/build
+Scanning dependencies of target HELLOWORLD
+[  9%] Building CXX object CMakeFiles/HELLOWORLD.dir/src/VectorAdd.cpp.o
+[ 18%] Building CXX object CMakeFiles/HELLOWORLD.dir/src/hmlp_blas_lapack.cpp.o
+Linking CXX static library lib/libHELLOWORLD.a
+[ 18%] Built target HELLOWORLD
+Scanning dependencies of target mcmc.x
+[ 27%] Building CXX object CMakeFiles/mcmc.x.dir/test/mcmc.cpp.o
+Linking CXX executable bin/mcmc.x
+[ 27%] Built target mcmc.x
+Scanning dependencies of target mcmc_M.x
+[ 36%] Building CXX object CMakeFiles/mcmc_M.x.dir/test/mcmc_M.cpp.o
+Linking CXX executable bin/mcmc_M.x
+[ 36%] Built target mcmc_M.x
+Scanning dependencies of target mcmc_M_omp.x
+[ 45%] Building CXX object CMakeFiles/mcmc_M_omp.x.dir/test/mcmc_M_omp.cpp.o
+Linking CXX executable bin/mcmc_M_omp.x
+[ 45%] Built target mcmc_M_omp.x
+Scanning dependencies of target mcmc_mixture.x
+[ 54%] Building CXX object CMakeFiles/mcmc_mixture.x.dir/test/mcmc_mixture.cpp.o
+Linking CXX executable bin/mcmc_mixture.x
+[ 54%] Built target mcmc_mixture.x
+Scanning dependencies of target mcmc_omp.x
+[ 63%] Building CXX object CMakeFiles/mcmc_omp.x.dir/test/mcmc_omp.cpp.o
+Linking CXX executable bin/mcmc_omp.x
+[ 63%] Built target mcmc_omp.x
+Scanning dependencies of target mcmc_rd.x
+[ 72%] Building CXX object CMakeFiles/mcmc_rd.x.dir/test/mcmc_rd.cpp.o
+Linking CXX executable bin/mcmc_rd.x
+[ 72%] Built target mcmc_rd.x
+Scanning dependencies of target mcmc_rdY_omp.x
+[ 81%] Building CXX object CMakeFiles/mcmc_rdY_omp.x.dir/test/mcmc_rdY_omp.cpp.o
+Linking CXX executable bin/mcmc_rdY_omp.x
+[ 81%] Built target mcmc_rdY_omp.x
+Scanning dependencies of target mcmc_rd_omp.x
+[ 90%] Building CXX object CMakeFiles/mcmc_rd_omp.x.dir/test/mcmc_rd_omp.cpp.o
+Linking CXX executable bin/mcmc_rd_omp.x
+[ 90%] Built target mcmc_rd_omp.x
+Scanning dependencies of target mcmc_sim.x
+[100%] Building CXX object CMakeFiles/mcmc_sim.x.dir/test/mcmc_sim.cpp.o
+Linking CXX executable bin/mcmc_sim.x
+[100%] Built target mcmc_sim.x

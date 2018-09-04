@@ -329,7 +329,7 @@ class Variables
 	     T logc1 = 0.0;
 		 for ( size_t j = 0; j < q; j ++ )
 		 {
-		   logc1 += std::log ( my_pi_m[ j ] ) * r1[ j ] + std::log ( 1 - my_pi_m[ j ] ) * ( 1 - r1[ j ] );
+		   logc1 += std::log ( my_pi_m[ 0 ] ) * r1[ j ] + std::log ( 1 - my_pi_m[ 0 ] ) * ( 1 - r1[ j ] );
 		 }
 		return logc1;
     };
@@ -339,7 +339,7 @@ class Variables
 		 T logc2 = 0.0;
 		 for ( size_t j = 0; j < q; j ++ )
 		 {
-		   logc2 += std::log ( my_pi_a[ j ] ) * r3[ j ] + std::log ( 1 - my_pi_a[ j ] ) * ( 1 - r3[ j ] );
+		   logc2 += std::log ( my_pi_a[ 0 ] ) * r3[ j ] + std::log ( 1 - my_pi_a[ 0 ] ) * ( 1 - r3[ j ] );
 		 }
 		return logc2;
     };
@@ -350,7 +350,7 @@ class Variables
 	void Iteration( size_t burnIn, size_t it )
 	{ 
 
-	  if ( it % 70000 == 0 ) { 
+	  if ( it % 30000 == 0 ) { 
 	  printf( "Iter %4lu sigma_m0 %.3E sigma_e %.3E sigma_g %.3E sigma_ma0 %.3E sigma_m1 %.3E sigma_a %.3E sigma_ma1 %.3E \n", 
 		it, sigma_m0, sigma_e, sigma_g, sigma_ma0, sigma_m1, sigma_a, sigma_ma1 ); fflush( stdout ); }
 	  /** update res1, res2, res2_c */
@@ -441,7 +441,7 @@ class Variables
         /** update r1[ j ] */
         T const2 = mu_mj1 * mu_mj1 / ( 2 * var_m1[ j ] ) - mu_mj0 * mu_mj0 / ( 2 * var_m0[ j ] ) + 
         0.5 * std::log( var_m1[ j ] / sigma_m1 ) - 0.5 * std::log( var_m0[ j ] / sigma_m0 ) + 
-                   std::log( pi_m[ j ] / ( 1.0 - pi_m[ j ] ) );
+                   std::log( pi_m[ 0 ] / ( 1.0 - pi_m[ 0 ] ) );
         if ( const2 < 300 )
         {
           const2 = std::exp( const2 );
@@ -460,7 +460,7 @@ class Variables
         /** update r3[ j ] */
         T const5 = mu_alpha_aj1 * mu_alpha_aj1 / ( 2 * var_alpha_a1[ 0 ] ) - 
 		    mu_alpha_aj0 * mu_alpha_aj0 / ( 2 * var_alpha_a0[ 0 ] ) + 
-        0.5 * std::log( var_alpha_a1[ 0 ] / sigma_ma1 ) - 0.5 * std::log( var_alpha_a0[ 0 ] / sigma_ma0 ) + std::log( pi_a[ j ] / ( 1.0 - pi_a[ j ] ) );
+        0.5 * std::log( var_alpha_a1[ 0 ] / sigma_ma1 ) - 0.5 * std::log( var_alpha_a0[ 0 ] / sigma_ma0 ) + std::log( pi_a[ 0 ] / ( 1.0 - pi_a[ 0 ] ) );
         if ( const5 < 300 )
         {
           const5 = std::exp( const5 );
@@ -592,24 +592,24 @@ class Variables
       sigma_m0  = 1.0 / dist_m0 ( generator );
       sigma_ma0 = 1.0 / dist_ma0 ( generator );
 
-	  hmlp::Data<T> log_my_pi_m( 1, q ); log_my_pi_m.rand( -0.01, 0.01 );
-	  hmlp::Data<T> log_my_pi_a( 1, q ); log_my_pi_a.rand( -0.01, 0.01 );
-      hmlp::Data<T> my_pi_m( 1, q );
-      hmlp::Data<T> my_pi_a( 1, q );
+	  hmlp::Data<T> log_my_pi_m( 1, 1 ); log_my_pi_m.rand( -0.01, 0.01 );
+	  hmlp::Data<T> log_my_pi_a( 1, 1 ); log_my_pi_a.rand( -0.01, 0.01 );
+      hmlp::Data<T> my_pi_m( 1, 1 );
+      hmlp::Data<T> my_pi_a( 1, 1 );
 
 	  T probab = 0.0;
 	  hmlp::Data<T> my_unif( 1, 1 );
-	  for ( size_t j = 0; j < q; j ++ )
+	  for ( size_t j = 0; j < 1; j ++ )
 	  {
 		    my_pi_m[ j ] = pi_m[ j ] * std::exp( log_my_pi_m[ j ] );
 		    my_pi_m[ j ] = std::abs( my_pi_m[ j ] );
 		    if ( my_pi_m[ j ] > 1.0 ) my_pi_m[ j ] = 1.0 / my_pi_m[ j ];
-		    if ( my_pi_m[ j ] < 1.0/q ) my_pi_m[ j ] = 1.0 / ( q*q*my_pi_m[ j ] );
+		    if ( my_pi_m[ j ] < 1.0/100 ) my_pi_m[ j ] = 1.0 / ( 100*100*my_pi_m[ j ] );
 	   
         my_pi_a[ j ] = pi_a[ j ]* std::exp( log_my_pi_a[ j ] );
         my_pi_a[ j ] = std::abs( my_pi_a[ j ] );
         if ( my_pi_a[ j ] > 1.0 ) my_pi_a[ j ] = 1.0 / my_pi_a[ j ];
-        if ( my_pi_a[ j ] < 1.0/q ) my_pi_a[ j ] = 1.0 / ( q*q*my_pi_a[ j ] );
+        if ( my_pi_a[ j ] < 1.0/100 ) my_pi_a[ j ] = 1.0 / ( 100*100*my_pi_a[ j ] );
 	  }
 
         probab = PostDistribution2( my_pi_a ) -
@@ -620,7 +620,7 @@ class Variables
         if ( probab > std::log (my_unif[ 0 ]) )
         {
       
-		  for ( size_t j = 0; j < q; j ++ )
+		  for ( size_t j = 0; j < 1; j ++ )
 		  {	
 			  pi_a[ j ] = my_pi_a[ j ];
 		    pi_m[ j ] = my_pi_m[ j ];
@@ -638,7 +638,7 @@ class Variables
       //printf("beta_m %.3E", beta_m[ 0 ] );
 	  //if ( it % 1000 == 0 ) 
       // { printf( "Iter %4lu \n", it ); fflush( stdout ); }
-	  if ( it > burnIn && it % 10 == 0 )
+	  if ( it > burnIn && it % 50 == 0 )
 	  {
         //printf( "Iter %4lu \n", it ); fflush( stdout );
         std::ofstream outfile;
@@ -648,9 +648,9 @@ class Variables
 		//std::ofstream outfile;
 		//outfile.open("results_shore.txt", std::ios_base::app);
 		for ( size_t i = 0; i < q; i ++ ) 
-		  outfile << beta_m[ i ] << " " << pi_m[ i ] << " " << (int)r1[ i ] << " " << alpha_a[ i ] << " " << pi_a[ i ] << " " << (int)r3[ i ] << " ";
+		  outfile << beta_m[ i ] << " " << (int)r1[ i ] << " " << alpha_a[ i ] << " " << (int)r3[ i ] << " ";
 		
-	    outfile << beta_a[ 0 ] << " " << sigma_m0 << " " << sigma_m1 << " " << sigma_ma0 << " " << sigma_ma1 << "\n";
+	    outfile << pi_m[ 0 ] << " " << pi_a[ 0 ] << " " << beta_a[ 0 ] << " " << sigma_m0 << " " << sigma_m1 << " " << sigma_ma0 << " " << sigma_ma1 << "\n";
 	  }
 
  
@@ -690,7 +690,7 @@ class Variables
 
 	T kma1 = 2.0;
 
-	T lma1 = 2.0;
+	T lma1 = 1.0;
    
     T ke  = 2.0;
 
@@ -756,7 +756,6 @@ class Variables
 
     hmlp::Data<T> res1;
 
-	/** what the fuck is this */
     hmlp::Data<T> res2;
     hmlp::Data<T> res2_c;
 

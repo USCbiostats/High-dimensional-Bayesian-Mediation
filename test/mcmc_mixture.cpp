@@ -1,17 +1,3 @@
-/**
- * mcmc_mixture.c
- *
- * Chenhan D. Yu
- *
- * Department of Computer Science, University of Texas at Austin
- *
- * Purpose: 
- *
- * Todo:
- *
- * Modification:
- *
- **/
 
 #include <tuple>
 #include <algorithm>
