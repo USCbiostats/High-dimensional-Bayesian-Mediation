@@ -1,1 +1,0 @@
-/net/wonderland/home/yanys/intel/compilers_and_libraries_2018.1.163/linux/bin/intel64/icpc    -std=c++11 -O3 -qopenmp -DUSE_BLAS   -mkl=parallel CMakeFiles/mcmc_mixture.x.dir/test/mcmc_mixture.cpp.o  -o bin/mcmc_mixture.x -rdynamic lib/libHELLOWORLD.a 
