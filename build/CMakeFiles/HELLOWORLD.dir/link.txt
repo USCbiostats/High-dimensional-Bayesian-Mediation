@@ -1,0 +1,2 @@
+/usr/bin/ar cq lib/libHELLOWORLD.a  CMakeFiles/HELLOWORLD.dir/src/VectorAdd.cpp.o CMakeFiles/HELLOWORLD.dir/src/hmlp_blas_lapack.cpp.o
+/usr/bin/ranlib lib/libHELLOWORLD.a
