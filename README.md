@@ -44,3 +44,6 @@ alpha_a.ini_file = initial values for 1-by-q alpha_a vector in the mediator mode
 pi_m.ini_file = initial values for pi_m
 
 pi_a.ini_file = initial values for pi_a
+
+
+The output file is 'results_11.txt', which contains the posterior samples of beta_mj, r1j, alpha_aj, r3j for each j-th mediator. Then follows pi_m, pi_a, beta_a, sigma_m0, sigma_m1, sigma_ma0, sigma_ma1.
