@@ -1,4 +1,4 @@
-To complile:
+To compile:
 
 source set_env.sh
 
