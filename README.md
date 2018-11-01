@@ -46,4 +46,4 @@ pi_m.ini_file = initial values for pi_m
 pi_a.ini_file = initial values for pi_a
 
 
-The output file is 'results_11.txt', which contains the posterior samples of beta_mj, r1j, alpha_aj, r3j for each j-th mediator. Then follows pi_m, pi_a, beta_a, sigma_m0, sigma_m1, sigma_ma0, sigma_ma1.
+The output file is 'results_11.txt', which contains the posterior samples of beta_mj, r1j, alpha_aj, r3j for each j-th mediator. Then follows the posterior samples of pi_m, pi_a, beta_a, sigma_m0, sigma_m1, sigma_ma0, sigma_ma1.
