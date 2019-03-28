@@ -51,6 +51,6 @@ pi_a.ini_file = initial values for pi_a, the proportion of non-zero elements in 
 
 Please make sure there is no missing or NA values in the above files.
 
-The output file is 'results_11.txt', which contains the posterior samples of beta_mj, r1j, alpha_aj, r3j for each j-th mediator. Then follows the posterior samples of pi_m, pi_a, beta_a, sigma_m0, sigma_m1, sigma_ma0, sigma_ma1.
+The output file is 'results_11.txt', which contains the posterior samples of (beta_mj, r1j, alpha_aj, r3j) for each j-th mediator. Then follows the posterior samples of pi_m, pi_a, beta_a, sigma_m0, sigma_m1, sigma_ma0, sigma_ma1.
 
 The posterior inclusion probability of each mediator is P(r1j = r3j = 1 | Data), which can be obtained from the posterior samples.
