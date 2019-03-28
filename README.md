@@ -1,4 +1,4 @@
-Compile environment:
+Compilation environment:
 
     Intel® Parallel Studio XE Cluster Edition for Linux
 
