@@ -33,50 +33,39 @@ int main( int argc, char *argv[] )
   size_t burnIn = 30000;
   size_t niter = 50000;
 
-	if ( argc == 18 )
-	{
-		/** read parameters */
-		sscanf( argv[ 1 ], "%lu", &n );
-		sscanf( argv[ 2 ], "%lu", &w1 );
-		sscanf( argv[ 3 ], "%lu", &w2 );
-		sscanf( argv[ 4 ], "%lu", &q );
-		sscanf( argv[ 5 ], "%lu", &burnIn );
-		sscanf( argv[ 6 ], "%lu", &niter );
-    sscanf( argv[ 7 ], "%lu", &q1 );
-    sscanf( argv[ 8 ], "%lu", &q2 );
-	}
-	else
-	{
-		printf( "\n[usage] ./mcmc.x <n> <w> <q> <q1> <niter>\n\n" );
-	}
+  if ( argc == 18 )
+  {
+	/** read parameters */
+	sscanf( argv[ 1 ], "%lu", &n );
+	sscanf( argv[ 2 ], "%lu", &w1 );
+	sscanf( argv[ 3 ], "%lu", &w2 );
+	sscanf( argv[ 4 ], "%lu", &q );
+	sscanf( argv[ 5 ], "%lu", &burnIn );
+	sscanf( argv[ 6 ], "%lu", &niter );
+    	sscanf( argv[ 7 ], "%lu", &q1 );
+    	sscanf( argv[ 8 ], "%lu", &q2 );
+   }
+   else
+   {
+	printf( "\n[usage] ./mcmc.x <n> <w> <q> <q1> <niter> missing required arguments! \n\n" );
+    }
 
 
     std::string Y_filename(       argv[  9 ] );
     std::string M_filename(       argv[  10 ] );
     std::string A_filename(       argv[ 11 ] );
     std::string C1_filename(      argv[ 12 ]  );
-	  std::string C2_filename(      argv[ 13 ] ); 
+    std::string C2_filename(      argv[ 13 ] ); 
     std::string beta_m_filename(  argv[ 14 ]  );
     std::string alpha_a_filename( argv[ 15 ] );
     std::string pi_m_filename(    argv[ 16 ]  );
     std::string pi_a_filename(    argv[ 17 ]  );
 
-	//std::string Y_filename( "bmi3.txt" );
-    //std::string M_filename( "sig_shore.txt" );
-    //std::string A_filename( "race_st.txt" );
-    //std::string C1_filename( "age.sex.txt" );
-	//std::string C2_filename( "age.sex.10pc.txt" );
-
-	//std::string beta_m_filename( "beta_m2.txt" );
-    //std::string alpha_a_filename( "alpha_a2.txt" );
-    //std::string pi_m_filename( "pi_m2.txt" );
-    //std::string pi_a_filename( "pi_a2.txt" );
-
     hmlp::Data<T> Y( n, 1 );
     hmlp::Data<T> M( n, q ); 
     hmlp::Data<T> A( n, 1 );
     hmlp::Data<T> C1( n, w1 );
-	  hmlp::Data<T> C2( n, w2 );
+    hmlp::Data<T> C2( n, w2 );
 
     hmlp::Data<T> beta_m( 1, q );
     hmlp::Data<T> alpha_a( 1, q ); 
@@ -87,15 +76,13 @@ int main( int argc, char *argv[] )
     M.readmatrix( n, q, M_filename );
     A.readmatrix( n, 1, A_filename );
     C1.readmatrix( n, w1, C1_filename );
-	  C2.readmatrix( n, w2, C2_filename );
+    C2.readmatrix( n, w2, C2_filename );
 
-	  beta_m.readmatrix( 1, q, beta_m_filename );
+    beta_m.readmatrix( 1, q, beta_m_filename );
     alpha_a.readmatrix( 1, q, alpha_a_filename );
     pi_m.readmatrix( 1, 1, pi_m_filename );
     pi_a.readmatrix( 1, 1, pi_a_filename );
 
-	//hmlp::Data<T> X( 2, 3 ); X.randn();
-	//X.WriteFile( "X.m" );
 
   mcmc::mcmc<T>( Y, A, M, C1, C2, beta_m, alpha_a, pi_m, pi_a, n, w1, w2, q, q1, q2, burnIn, niter );
 
