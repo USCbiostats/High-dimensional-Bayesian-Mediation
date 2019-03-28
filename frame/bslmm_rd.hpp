@@ -578,12 +578,12 @@ class Variables
 	 my_pi_m[ j ] = pi_m[ j ] * std::exp( log_my_pi_m[ j ] );
 	 my_pi_m[ j ] = std::abs( my_pi_m[ j ] );
 	 if ( my_pi_m[ j ] > 1.0 ) my_pi_m[ j ] = 1.0 / my_pi_m[ j ];
-	 if ( my_pi_m[ j ] < 1.0/100 ) my_pi_m[ j ] = 1.0 / ( 100*100*my_pi_m[ j ] );
+	 if ( my_pi_m[ j ] < 1.0/q ) my_pi_m[ j ] = 1.0 / ( q*q*my_pi_m[ j ] );
 	   
          my_pi_a[ j ] = pi_a[ j ]* std::exp( log_my_pi_a[ j ] );
          my_pi_a[ j ] = std::abs( my_pi_a[ j ] );
          if ( my_pi_a[ j ] > 1.0 ) my_pi_a[ j ] = 1.0 / my_pi_a[ j ];
-         if ( my_pi_a[ j ] < 1.0/100 ) my_pi_a[ j ] = 1.0 / ( 100*100*my_pi_a[ j ] );
+         if ( my_pi_a[ j ] < 1.0/q ) my_pi_a[ j ] = 1.0 / ( q*q*my_pi_a[ j ] );
        }
 
         probab = PostDistribution2( my_pi_a ) -
