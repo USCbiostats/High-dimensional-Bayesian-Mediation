@@ -1,5 +1,6 @@
 Compile environment:
 
+Intel® Parallel Studio XE Cluster Edition for Linux
 
 To compile:
 
