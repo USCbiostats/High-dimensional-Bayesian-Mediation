@@ -37,9 +37,9 @@ M_file = mediators file containing n-by-q matrix
 
 Y_file = outcome file containing n-by-1 outcome vector
 
-C1_file = covariate file containing n-by-c1 covariate matrix for the outcome model
+C1_file = covariate file containing n-by-c1 covariate matrix for the outcome model, with the first column being 1 for the intercept
 
-C2_file = covariate file containing n-by-c2 covariate matrix for the mediator model
+C2_file = covariate file containing n-by-c2 covariate matrix for the mediator model, with the first column being 1 for the intercept
 
 beta_m.ini_file = initial values for 1-by-q beta_m vector (mediator-outcome coefficients) in the outcome model, 
 
