@@ -1,22 +1,22 @@
 Compile environment:
 
-  Intel® Parallel Studio XE Cluster Edition for Linux
+    Intel® Parallel Studio XE Cluster Edition for Linux
 
 To compile:
 
-  source set_env.sh
+    source set_env.sh
 
-  mkdir build
+    mkdir build
 
-  cd build
+    cd build
 
-  cmake ..
+    cmake ..
 
-  make
+    make
 
 To run the program for high-dimensional mediation analysis:
 
-  ./bin/mcmc_rd.x n c1 c2 q burnIn iter 1 1 Y_file M_file A_file C1_file C2_file beta_m.ini_file alpha_a.ini_file pi_m.ini_file pi_a.ini_file
+    ./bin/mcmc_rd.x n c1 c2 q burnIn iter 1 1 Y_file M_file A_file C1_file C2_file beta_m.ini_file alpha_a.ini_file pi_m.ini_file pi_a.ini_file
 
 where
 n = sample size
