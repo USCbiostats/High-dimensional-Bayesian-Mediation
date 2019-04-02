@@ -1,9 +1,16 @@
-Compilation environment:
+Compilation environment (this is already available at USC's HPCC, so nevermind):
 
     Intel® Parallel Studio XE Cluster Edition for Linux
 
 To compile:
 
+1.  Download the thing using cmd line `git clone https://github.com/USCbiostats/High-dimensional-Bayesian-Mediation`
+
+2.  Go to the folder `cd High-dimensional-Bayesian-Mediation`
+
+3.  Install:
+
+    ```
     source set_env.sh
 
     mkdir build
@@ -13,6 +20,7 @@ To compile:
     cmake ..
 
     make
+    ```
 
 To run the program for high-dimensional mediation analysis:
 
